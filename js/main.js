@@ -23,13 +23,41 @@ $(function() {
                     this.squares.push([r + i, c]);
                     if(this.board[r+i][c] == "S") {
                         this.squares = [];
-                        break;
+                        break;his.squares = [];
                     }
                 }
-            } else { //Left off on 12/18/19
-
+            } else {
+                var r = Math.floor(Math.random() * this.board.length);
+                var c = Math.floor(Math.random() * (this.board.length - length));
+                for (var i = 0; i < length; i++) {
+                    this.squares.push([r, c + i]);
+                    if (this.board[r][c + i] == "S") {
+                        this.squares = [];
+                        break;
+                }
             }
            }
+           if(this.squares.length == length) {
+                placed = true;
+                for (var i = 0; i < this.squares.length; i++) {
+                    var r = this.squares[i][0];
+                    var c = this.squares[i][1];
+                    this.board[r][c] = "S";
+                }
+           }
+           }
+        }
+        this.place();
+    }
+    function drawBoard(board, player) {
+        for (var i = 0; i < board.length; i++) {
+            for (var j = 0; j < board[i].length; j++) {
+                var color = "#1AD1FF";
+                if(board[i][j] == "S" && player === "player") {
+                    color = "gray";
+                }
+                $("#" + player + " > #" + i + "_" + j).css("background-color", color);
+            }
         }
     }
 
