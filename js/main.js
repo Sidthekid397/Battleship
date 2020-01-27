@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
     var playerBoard = [];
     var playerShips = [];
     var compBoard = [];
@@ -12,77 +12,84 @@ $(function(){
         this.squares = [];
         this.board = board;
 
-        this.place = function(){
+        this.place = function() {
            var placed = false;
            var vertical = Math.round(Math.random()) == 0;
-           while(!placed){
-               if(vertical){
+           while(!placed) {
+               if(vertical) {
                    var c = Math.floor(Math.random() * this.board.length);
                    var r = Math.floor(Math.random() * (this.board.length-length));
-                   for (var i=0; i < length; i++){
+                   for (var i=0; i < length; i++) {
                        this.squares.push([r + i, c]);
-                       if(this.board[r+i][c] == "S"){
+                       if(this.board[r+i][c] == "S") {
                            this.squares = [];
                            break;
                        }
                    }
-               }
-           }
-           else{
+           } else {
                var r = Math.floor(Math.random() * this.board.length);
                var c = Math.floor(Math.random() * (this.board.length - length));
                for (var i = 0; i < length; i++) {
                    this.squares.push([r, c + i]);
-                   if (this.board[r][c + i] == "S"){
+                   if (this.board[r][c + i] == "S") {
                        this.squares = [];
                        break;
                    }
                }
            }
-           if(this.squares.length == length){
+           if(this.squares.length == length) {
                placed = true;
-               for (var i = 0; i < this.squares.length; i++){
+               for (var i = 0; i < this.squares.length; i++) {
                    var r = this.squares[i][0];
                    var c = this.squares[i][1];
                    this.board[r][c] = "S";
                }
            }
         }
-      } /* End function Ship */
+    }
+    this.place();
+} /* End function Ship */
 
-      this.checkSunk = function(){
-        for (var i = 0; i < this.squares,length; i++){
-            var r = this.squares[i][0];
-            var c = this.squares[i][1];
-            if (this.board[r][c] === "S"){
-                return false;
+      /*#### Add function checkSunk 1/15/20 ##### */
+    /* How to tell if the ship is sunk*/
+
+         this.checkSunk = function(){
+             /* Iterates through the ship's list of quares and checks the cooresponding position in the board */
+            for (var i = 0; i< this.squares.length; i++){
+                var r = this.squares[i][0];
+                var c = this.squares[i][1];
+                /* If a square's calue indicates part of a ship, we  know that the ship is not sunk and returns false */
+                if(this.board[r][c] === "S"){
+                    return false;
+                }
             }
-          {
+             /* If the loop completes, we know that the ship is sunk and can set the ship's sunk variable to true and return true. */
             this.sunk = true;
-            return
-          }
-        }
-        this.sunk = true;
-        return true;
-      }
+            return true;
+         }
+}
 
-    function drawBoard(board, player){
+    function drawBoard(board, player) {
         for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board[i].length; j++){
+            for (var j = 0; j < board[i].length; j++) {
                 var color = "#1AD1FF";
-                if(board[i][j] == "S" && player === "player"){
+                if(board[i][j] == "S" && player === "player") {
                     color = "gray";
-                }
-                else if (board[i][j] == "H"){
-                color = "E60000";/*Will change colors eventually*/
-                }
-                else if (board[i][j] == "W"){
-                color = "FFFFLA";
+                } /* Use different colors to indicate hits and misses */
+                else if(board[i][j] == "H"){
+                    color = "#e60000";
+                }else if(board[i][j] == "M"){
+                    color = "#ffff1a";
                 }
                 $("#" + player + " > #" + i + "_" + j).css("background-color", color);
             }
         }
     }
+/* Function to see checkWon */
+
+
+/* Function compTurn for computer turn */
+
 
     function init() {
         playerBoard = [];
@@ -120,12 +127,11 @@ $(function(){
 
             drawBoard(playerBoard, "player");
 
-            // Click Event
-            $("#computer > .gridsquare").click(function())
-            {
+            /* Click Event on class gridSquare */
+            $("#computer > .gridsquare").click(function(){
                 var id = $(this).attr("id").split("_");
-                var r = parse/int(id[0]);
-                var c = parse/int(id[1]);
-            });
+                var r = parseInt(id[0]);
+                var c = parseInt(id[1]);
+                /******#### END 1/22 ####*****/
         }
 });
